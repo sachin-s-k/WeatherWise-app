@@ -2,6 +2,7 @@ import { useState } from "react"
 import CardComponent from "./components/CardComponent"
 import SearchBar from "./components/SearchBar"
 import axios from "axios"
+import Header from "./components/Header"
 
 
 function App() {
@@ -19,7 +20,7 @@ try{
         const response= await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city_name},india&appid=${API_key}`)
   
         console.log(response.data.main,'responseeee');
-        setWeatherData([{type:'temperature',value:`${Math.round(response.data.main.temp-273.15)} degree cel`},{type:'pressure',value:`${response.data.main.pressure*0.000986923} atm` },{type:'humidity',value:`${response.data.main.humidity}%`}])
+        setWeatherData([{type:'Temperature',value:`${Math.round(response.data.main.temp-273.15)} degree cel`},{type:'Pressure',value:`${response.data.main.pressure*0.000986923} atm` },{type:'humidity',value:`${response.data.main.humidity}%`}])
  }else{
   setCityError('Enter your city name')
  }
@@ -43,9 +44,10 @@ setCityError(err.response.data.message)
   return (
    
   <>
+<Header/>
 <div className="bg-gray-200 h-screen" >
   <div className="text-center pt-10">
-    <h6 className="text-6xl">Weather app</h6>
+  {cityName?<h1 className="text-6xl"><span className="text-xl">Weather in </span>{cityName}</h1>:<h1 className="text-4xl pt-14">Find current weather conditions</h1>}
   </div>
 <div className="">
  <SearchBar getCurrentWeather={getCurrentWeather}/>
